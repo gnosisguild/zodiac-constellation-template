@@ -1,4 +1,4 @@
-import { eth_wrapping } from "../roles";
+import { eth_wrapping_sep } from "../roles";
 
 const safe = ref("safe", { type: "SAFE", chain: "sep" });
 const roles = ref("roles", { type: "ROLES", chain: "sep" });
@@ -16,6 +16,6 @@ export default [
     owner: safe,
     target: safe,
     avatar: safe,
-    roles: { eth_wrapping },
+    roles: { eth_wrapping_sep },
   }),
 ] satisfies Specification;
