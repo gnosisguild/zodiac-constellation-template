@@ -14,14 +14,14 @@ export type Permissions = (
   | Promise<PermissionSet>
 )[];
 
+export type Ref = (completion: any) => { ref: Lowercase<string> };
+
 export type Role = {
   members: (Ref | `0x${string}`)[];
   permissions: Permissions;
 };
 
 type Prettify<T> = { [K in keyof T]: T[K] } & {};
-
-type Ref = (completion: any) => { ref: Lowercase<string> };
 
 type EnhanceRefs<T> = T extends `$${Lowercase<string>}`
   ? Ref
@@ -30,6 +30,9 @@ type EnhanceRefs<T> = T extends `$${Lowercase<string>}`
     : T extends Record<string, any>
       ? { [K in keyof T]: EnhanceRefs<T[K]> }
       : T;
+
+const test = { ref: "$test" } as const;
+type Test = EnhanceRefs<typeof test>;
 
 type AllowChecksumAddresses<T> = T extends `0x${Lowercase<string>}`
   ? `0x${string}`
@@ -55,6 +58,7 @@ type Roles = Prettify<
   > & { roles: { [key: string]: Role | null } }
 >;
 
-export type Node = EnhanceRefs<AllowChecksumAddresses<Safe | Delay | Roles>>;
-
+// TODO remove AllowChecksumAddresses once we've released the adjusted Zodiac OS api-types
+export type NodeWithRefsResolved = AllowChecksumAddresses<Safe | Delay | Roles>;
+export type Node = EnhanceRefs<Safe | Delay | Roles>;
 export type Specification = Node[];

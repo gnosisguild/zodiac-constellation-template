@@ -1,6 +1,6 @@
 import { ApplyConstellationPayload } from "@zodiac-os/api-types";
 import assert from "assert";
-import { Node, Ref, Specification } from "./types";
+import { Node, NodeWithRefsResolved, Ref, Specification } from "./types";
 
 /** Processes the specification so that it ready to be sent to the Zodiac OS API */
 export const processSpecification = async (
@@ -9,11 +9,7 @@ export const processSpecification = async (
   specification = resolveRefs(specification);
 };
 
-type SpecificationWithRefsResolved = Node[];
-
-const resolveRefs = (
-  specification: Specification,
-): SpecificationWithRefsResolved => {
+const resolveRefs = (specification: Specification): NodeWithRefsResolved[] => {
   return specification.map((node) => {
     switch (node.type) {
       case "SAFE":
