@@ -1,1 +1,1 @@
-export * from "./types";
+export { Specification, Role, ContractsConfig } from "./types";
