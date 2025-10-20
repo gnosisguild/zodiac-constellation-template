@@ -32,5 +32,5 @@ export function ref<
   const S extends Stub<K>,
 >(id: R, stub: S & { type: K }) {
   return (completion: Completion<K, S>) =>
-    ({ ...stub, ...completion, ref: id }) as unknown as Built<K, R>;
+    Object.assign(stub, completion, { ref: id }) as unknown as Built<K, R>;
 }

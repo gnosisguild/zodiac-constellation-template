@@ -4,6 +4,8 @@
     "": {
       "name": "@zodiac-os/constellation-template",
       "dependencies": {
+        "@gnosis-guild/eth-sdk": "^0.4.0",
+        "@gnosis-guild/eth-sdk-client": "^0.1.6",
         "@zodiac-os/api-types": "^1.2.2",
         "@zodiac-os/sdk": "^1.0.0",
         "defi-kit": "^2.21.6",
@@ -23,7 +25,7 @@
 
     "@epic-web/invariant": ["@epic-web/invariant@1.0.0", "", {}, "sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA=="],
 
-    "@gnosis-guild/eth-sdk": ["@gnosis-guild/eth-sdk@0.3.10", "", { "dependencies": { "@gnosis-guild/typechain-ethers-v6": "^0.5.3", "chalk": "^4.1.2", "commander": "^8.3.0", "debug": "^4.3.2", "fs-extra": "^10.0.0", "glob": "7.1.7", "got": "^11.8.2", "lodash": "^4.17.21", "mkdirp": "^1.0.4", "ora": "^5.4.1", "typechain": "^8.0.0", "zod": "^3.11.5" }, "peerDependencies": { "ethers": "^6" }, "bin": { "eth-sdk": "dist/cli.js" } }, "sha512-tuUj2L8fZsfvcNidaMh65l4MPEbMw5jGNBZFzE6BrYVVmLLcc6h7iyMKF8x8l9PIuFuRGiP94KUEy4NhxBo+bg=="],
+    "@gnosis-guild/eth-sdk": ["@gnosis-guild/eth-sdk@0.4.0", "", { "dependencies": { "@gnosis-guild/typechain-ethers-v6": "^0.5.3", "chalk": "^4.1.2", "commander": "^8.3.0", "debug": "^4.3.2", "fs-extra": "^10.0.0", "glob": "7.1.7", "got": "^11.8.2", "mkdirp": "^1.0.4", "ora": "^5.4.1", "typechain": "^8.0.0", "zod": "^3.11.5" }, "peerDependencies": { "ethers": "^6" }, "bin": { "eth-sdk": "dist/cli.js" } }, "sha512-tvpdXlSPe48mKrrvk9mT3mpiy/YKOknV91jbjGQLVEwj0moBIjS9lrhsR1oE/do9ml9xX0dud0RbC3I6RgHFjw=="],
 
     "@gnosis-guild/eth-sdk-client": ["@gnosis-guild/eth-sdk-client@0.1.6", "", {}, "sha512-v+DAOqfeBIVIsnBYbe5ZL40qgOULJdeS1hxL1uMfHsf7Ph0MfjokUFx3WpqFdg+D0nuNsbYVkmZIv8MALDvahw=="],
 
@@ -261,15 +263,13 @@
 
     "yaml": ["yaml@2.8.1", "", { "bin": { "yaml": "bin.mjs" } }, "sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw=="],
 
-    "zod": ["zod@4.1.12", "", {}, "sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ=="],
+    "zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
 
     "zodiac-roles-deployments": ["zodiac-roles-deployments@3.2.0", "", {}, "sha512-T7E+aV35tHV/WaUw8KmAxNlJrKJ1ONwFLVlYhrASzUrrFm0H/CDKCqI/e9l2zuDpqlWYsrCfDt8gxUCKFgZWgg=="],
 
     "zodiac-roles-sdk": ["zodiac-roles-sdk@3.3.0", "", { "dependencies": { "ethers": "^6.13.5", "zodiac-roles-deployments": "3.2.0" }, "peerDependencies": { "@gnosis-guild/eth-sdk-client": "^0.1.6", "openapi-backend": "^5.15.0", "openapi-types": "^12.1.3" }, "optionalPeers": ["@gnosis-guild/eth-sdk-client", "openapi-backend", "openapi-types"] }, "sha512-A3m5oHBEP/3wq9leHh1wrTcfXXrn+fnJuZ0orQ0rpB886ewuRiMR0uzGZBx4b/llfahsN2YmxWB9EZbsmGE+mg=="],
 
-    "@asteasolutions/zod-to-openapi/zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
-
-    "@gnosis-guild/eth-sdk/zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
+    "@zodiac-os/api-types/zod": ["zod@4.1.12", "", {}, "sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ=="],
 
     "clone-response/mimic-response": ["mimic-response@1.0.1", "", {}, "sha512-j5EctnkH7amfV/q5Hgmoal1g2QHFJRraOtmx0JpIqkxhBhI/lJSl1nMpQ45hVarwNETOoWEimndZ4QK0RHxuxQ=="],
 
@@ -279,7 +279,7 @@
 
     "command-line-usage/typical": ["typical@5.2.0", "", {}, "sha512-dvdQgNDNJo+8B2uBQoqdb11eUCE1JQXhvjC/CZtgvZseVd5TYMXnq0+vuUemXbd/Se29cTaUuPX3YIc2xgbvIg=="],
 
-    "defi-kit/zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
+    "defi-kit/@gnosis-guild/eth-sdk": ["@gnosis-guild/eth-sdk@0.3.10", "", { "dependencies": { "@gnosis-guild/typechain-ethers-v6": "^0.5.3", "chalk": "^4.1.2", "commander": "^8.3.0", "debug": "^4.3.2", "fs-extra": "^10.0.0", "glob": "7.1.7", "got": "^11.8.2", "lodash": "^4.17.21", "mkdirp": "^1.0.4", "ora": "^5.4.1", "typechain": "^8.0.0", "zod": "^3.11.5" }, "peerDependencies": { "ethers": "^6" }, "bin": { "eth-sdk": "dist/cli.js" } }, "sha512-tuUj2L8fZsfvcNidaMh65l4MPEbMw5jGNBZFzE6BrYVVmLLcc6h7iyMKF8x8l9PIuFuRGiP94KUEy4NhxBo+bg=="],
 
     "table-layout/array-back": ["array-back@4.0.2", "", {}, "sha512-NbdMezxqf94cnNfWLL7V/im0Ub+Anbb0IoZhvzie8+4HJ4nMQuzHuy49FkGYCJK2yAloZ3meiB6AVMClbrI1vg=="],
 
