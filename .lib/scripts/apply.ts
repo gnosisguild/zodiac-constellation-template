@@ -23,18 +23,21 @@ assert(
 const apiClient = new ApiClient({
   apiKey: ZODIAC_API_KEY,
   workspace: WORKSPACE_ID,
+  baseUrl: "http://localhost:3040/api/v1",
 });
 
 async function main() {
+  const defaultEntrypoint = "accounts/index.ts";
+
   const args = await yargs(process.argv.slice(2))
     .usage("$0 <entrypoint>")
     .positional("entrypoint", {
-      default: "accounts/index.ts",
+      default: defaultEntrypoint,
       describe: "The Zodiac OS workspace ID to apply the constellation to",
       type: "string",
     }).argv;
 
-  const [entrypoint] = args._ as [string];
+  const [entrypoint = defaultEntrypoint] = args._ as [string];
 
   // Resolve the entrypoint path relative to the current working directory
   const resolvedPath = path.resolve(process.cwd(), entrypoint);

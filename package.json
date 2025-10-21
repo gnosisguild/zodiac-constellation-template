@@ -20,6 +20,7 @@
     "@zodiac-os/api-types": "^1.2.2",
     "@zodiac-os/sdk": "^1.0.0",
     "defi-kit": "^2.21.6",
-    "zodiac-roles-sdk": "^3.3.0"
+    "dotenv": "^17.2.3",
+    "zodiac-roles-sdk": "^3.3.2"
   }
 }
