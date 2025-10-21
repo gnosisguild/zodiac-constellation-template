@@ -16,8 +16,8 @@ export type Permissions = (
 
 export type Ref = (completion: any) => { ref: Lowercase<string> };
 
-export type RoleWithRefsResolved = {
-  members: (`$${Lowercase<string>}` | `0x${string}`)[];
+export type Role = {
+  members: (Ref | `0x${string}`)[];
   permissions: Permissions;
 };
 
@@ -31,6 +31,8 @@ type EnhanceRefs<T> = T extends `$${Lowercase<string>}`
       ? { [K in keyof T]: EnhanceRefs<T[K]> }
       : T;
 
+// TODO remove AllowChecksumAddresses once we've released the adjusted Zodiac OS api-types
+
 type AllowChecksumAddresses<T> = T extends `0x${Lowercase<string>}`
   ? `0x${string}`
   : T extends (infer U)[]
@@ -40,24 +42,32 @@ type AllowChecksumAddresses<T> = T extends `0x${Lowercase<string>}`
       : T;
 
 type Safe = Prettify<
-  Extract<ApplyConstellationPayload["specification"][number], { type: "SAFE" }>
->;
-type Delay = Prettify<
-  Extract<ApplyConstellationPayload["specification"][number], { type: "DELAY" }>
->;
-type Roles = Prettify<
-  Omit<
+  EnhanceRefs<
     Extract<
       ApplyConstellationPayload["specification"][number],
-      { type: "ROLES" }
-    >,
-    "roles"
-  > & { roles: { [key: string]: RoleWithRefsResolved | null } }
+      { type: "SAFE" }
+    >
+  >
+>;
+type Delay = Prettify<
+  EnhanceRefs<
+    Extract<
+      ApplyConstellationPayload["specification"][number],
+      { type: "DELAY" }
+    >
+  >
+>;
+type Roles = Prettify<
+  EnhanceRefs<
+    Omit<
+      Extract<
+        ApplyConstellationPayload["specification"][number],
+        { type: "ROLES" }
+      >,
+      "roles"
+    >
+  > & { roles: { [key: string]: Role | null } }
 >;
 
-// TODO remove AllowChecksumAddresses once we've released the adjusted Zodiac OS api-types
-export type NodeWithRefsResolved = AllowChecksumAddresses<Safe | Delay | Roles>;
-export type Node = EnhanceRefs<Safe | Delay | Roles>;
+export type Node = Safe | Delay | Roles;
 export type Specification = Node[];
-
-export type Role = Extract<Node, { type: "ROLES" }>["roles"][string];

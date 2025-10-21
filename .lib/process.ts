@@ -1,51 +1,81 @@
-import { ApplyConstellationPayload } from "@zodiac-os/api-types";
 import assert from "assert";
-import { Node, NodeWithRefsResolved, Ref, Role, Specification } from "./types";
+import { ApplyConstellationPayload } from "@zodiac-os/api-types";
+import { processPermissions } from "zodiac-roles-sdk";
+import { Node, Ref, Role, Specification } from "./types";
 
 /** Processes the specification so that it ready to be sent to the Zodiac OS API */
 export const processSpecification = async (
   specification: Specification,
-): ApplyConstellationPayload["specification"] => {
-  specification = resolveRefs(specification);
+): Promise<ApplyConstellationPayload["specification"]> => {
+  // @ts-ignore There's a mismatch on the `address` field. It might get resolved once we publish the latest api-types.
+  return await Promise.all(
+    specification
+      .map(resolveRefs)
+      .map(async (node) =>
+        node.type === "ROLES"
+          ? { ...node, roles: await processRoles(node.roles) }
+          : node,
+      ),
+  );
 };
 
-const resolveRefs = (specification: Specification): NodeWithRefsResolved[] => {
-  return specification.map((node) => {
-    switch (node.type) {
-      case "SAFE":
-        return {
-          ...node,
-          owners: node.owners?.map((owner) => resolveRef(owner)),
-          modules: node.modules?.map((module) => resolveRef(module)),
-        };
-      case "DELAY":
-        return {
-          ...node,
-          owner: resolveRef(node.owner),
-          target: resolveRef(node.target),
-          avatar: resolveRef(node.avatar),
-          modules: node.modules?.map(resolveRef),
-        };
-      case "ROLES":
-        return {
-          ...node,
-          owner: resolveRef(node.owner),
-          target: resolveRef(node.target),
-          avatar: resolveRef(node.avatar),
-          roles: Object.fromEntries(
-            Object.entries(node.roles).map(
-              ([key, role]: [string, Role | null]) => [
-                key,
-                role && {
-                  ...role,
-                  members: role.members.map(resolveRef),
-                },
-              ],
-            ),
+type RoleWithRefsResolved = {
+  members: (`$${Lowercase<string>}` | `0x${string}`)[];
+  permissions: Permissions;
+};
+
+const processRoles = async (roles: {
+  [key: string]: RoleWithRefsResolved | null;
+}) => {
+  return Object.fromEntries(
+    await Promise.all(
+      Object.entries(roles).map(async ([key, role]) => [
+        key,
+        role && {
+          key,
+          members: role.members,
+          ...processPermissions(await Promise.all(role.permissions)),
+        },
+      ]),
+    ),
+  );
+};
+
+const resolveRefs = (node: Node) => {
+  switch (node.type) {
+    case "SAFE":
+      return {
+        ...node,
+        owners: node.owners?.map((owner) => resolveRef(owner)),
+        modules: node.modules?.map((module) => resolveRef(module)),
+      };
+    case "DELAY":
+      return {
+        ...node,
+        owner: resolveRef(node.owner),
+        target: resolveRef(node.target),
+        avatar: resolveRef(node.avatar),
+        modules: node.modules?.map(resolveRef),
+      };
+    case "ROLES":
+      return {
+        ...node,
+        owner: resolveRef(node.owner),
+        target: resolveRef(node.target),
+        avatar: resolveRef(node.avatar),
+        roles: Object.fromEntries(
+          Object.entries(node.roles).map(
+            ([key, role]: [string, Role | null]) => [
+              key,
+              role && {
+                ...role,
+                members: role.members.map(resolveRef),
+              },
+            ],
           ),
-        };
-    }
-  });
+        ),
+      };
+  }
 };
 
 const resolveRef = <
