@@ -31,40 +31,44 @@ type EnhanceRefs<T> = T extends `$${Lowercase<string>}`
       ? { [K in keyof T]: EnhanceRefs<T[K]> }
       : T;
 
-// TODO remove AllowChecksumAddresses once we've released the adjusted Zodiac OS api-types
-
-type AllowChecksumAddresses<T> = T extends `0x${Lowercase<string>}`
-  ? `0x${string}`
+type RealBigints<T> = T extends `${bigint}`
+  ? bigint
   : T extends (infer U)[]
-    ? AllowChecksumAddresses<U>[]
+    ? RealBigints<U>[]
     : T extends Record<string, any>
-      ? { [K in keyof T]: AllowChecksumAddresses<T[K]> }
+      ? { [K in keyof T]: RealBigints<T[K]> }
       : T;
 
 type Safe = Prettify<
   EnhanceRefs<
-    Extract<
-      ApplyConstellationPayload["specification"][number],
-      { type: "SAFE" }
+    RealBigints<
+      Extract<
+        ApplyConstellationPayload["specification"][number],
+        { type: "SAFE" }
+      >
     >
   >
 >;
 type Delay = Prettify<
   EnhanceRefs<
-    Extract<
-      ApplyConstellationPayload["specification"][number],
-      { type: "DELAY" }
+    RealBigints<
+      Extract<
+        ApplyConstellationPayload["specification"][number],
+        { type: "DELAY" }
+      >
     >
   >
 >;
 type Roles = Prettify<
   EnhanceRefs<
-    Omit<
-      Extract<
-        ApplyConstellationPayload["specification"][number],
-        { type: "ROLES" }
-      >,
-      "roles"
+    RealBigints<
+      Omit<
+        Extract<
+          ApplyConstellationPayload["specification"][number],
+          { type: "ROLES" }
+        >,
+        "roles"
+      >
     >
   > & { roles: { [key: string]: Role | null } }
 >;

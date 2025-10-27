@@ -17,8 +17,8 @@
   "dependencies": {
     "@gnosis-guild/eth-sdk": "^0.4.0",
     "@gnosis-guild/eth-sdk-client": "^0.1.6",
-    "@zodiac-os/api-types": "^1.2.2",
-    "@zodiac-os/sdk": "^1.0.0",
+    "@zodiac-os/api-types": "^1.3.0",
+    "@zodiac-os/sdk": "^1.0.1",
     "defi-kit": "^2.21.6",
     "dotenv": "^17.2.3",
     "zodiac-roles-sdk": "^3.3.2"
