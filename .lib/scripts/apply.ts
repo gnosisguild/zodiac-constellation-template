@@ -8,23 +8,7 @@ import { ApiClient } from "@zodiac-os/sdk";
 import path from "path";
 import { processSpecification } from "../process";
 import { getGitOrigin } from "../source";
-
-const { WORKSPACE_ID, ZODIAC_API_KEY } = process.env;
-
-assert(
-  WORKSPACE_ID,
-  "WORKSPACE_ID env variable is required. Create a .env file in the root of the project based on the .env.template file.",
-);
-assert(
-  ZODIAC_API_KEY,
-  "ZODIAC_API_KEY env variable is required. Create a .env file in the root of the project based on the .env.template file.",
-);
-
-const apiClient = new ApiClient({
-  apiKey: ZODIAC_API_KEY,
-  workspace: WORKSPACE_ID,
-  baseUrl: "http://localhost:3040/api/v1",
-});
+import { apiClient } from "./apiClient";
 
 async function main() {
   const defaultEntrypoint = "accounts/index.ts";
