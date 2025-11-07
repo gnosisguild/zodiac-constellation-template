@@ -15,5 +15,11 @@
       "@/lib": ["./.lib/index.ts"]
     }
   },
-  "include": ["accounts/**/*", "roles/**/*", "contracts.ts", ".lib/**/*"]
+  "include": [
+    "accounts/**/*",
+    "roles/**/*",
+    "contracts.ts",
+    ".lib/**/*",
+    ".zodiac-os/types/**/*"
+  ]
 }
