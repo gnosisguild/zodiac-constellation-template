@@ -4,7 +4,6 @@ import "../globals";
 import assert from "assert";
 import open from "open";
 import yargs from "yargs";
-import { ApiClient } from "@zodiac-os/sdk";
 import path from "path";
 import { processSpecification } from "../process";
 import { getGitOrigin } from "../source";
