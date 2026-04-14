@@ -1,6 +1,6 @@
 import { eth_wrapping } from "../roles";
 
-// there will be a typegen step, thats writes the entities that live in the connected Zodiac
+// there will be a codegen step, thats writes the entities that live in the connected Zodiac
 // org into TS files, e.g. as objects that could look something like this:
 const ZODIAC_SAFES = {
   "GG DAO": {
@@ -15,7 +15,7 @@ const ZODIAC_USERS = {
   },
 } as const;
 
-// the SDK entrypoint `constellation()` is typed based on these typegen outputs
+// the SDK entrypoint `constellation()` is typed based on these codegen outputs
 // Its return value allows accessing accounts (safe, roles, delay) for the constellation
 const eth = constellation({
   workspace: "testing",
@@ -23,7 +23,7 @@ const eth = constellation({
   chain: 1,
 });
 
-// bracket access for existing accounts — autocompletes from typegen, returns a node reference
+// bracket access for existing accounts — autocompletes from codegen, returns a node reference
 // for existing nodes, the call provides optional overrides (all props are already known)
 const ggDao = eth.safe["GG DAO"]({
   vault: true, // override: start to show it as a vault
@@ -35,8 +35,6 @@ const ggDao = eth.safe["GG DAO"]({
 const ggDaoRoles = eth.roles["GG DAO"]({
   roles: { eth_wrapping },
 });
-
-eth.policies["My existing policy"]({});
 
 // eth.safe(...) with full config creates a new node — label is a prop, all required fields must be provided
 // returns a node reference (not callable again)
