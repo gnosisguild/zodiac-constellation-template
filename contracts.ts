@@ -10,4 +10,7 @@ export default {
       positions_nft: "0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
     },
   },
+  megaeth: {
+    test: "0x897A33A0AF45b3ba097Bd6045187D622252e6AcD",
+  },
 } satisfies ContractsConfig;

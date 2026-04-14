@@ -1,11 +1,15 @@
-import { NestedAddressesInput } from "@gnosis-guild/eth-sdk/dist/config";
 import { Permission, PermissionSet } from "zodiac-roles-sdk";
 import { ApplyConstellationPayload } from "@zodiac-os/api-types";
+import type { ChainPrefix } from "./allow/networks";
 
-export type Chain = ApplyConstellationPayload["specification"][number]["chain"];
+export type { ChainPrefix } from "./allow/networks";
+
+export type NestedAddresses = {
+  [name: string]: `0x${string}` | NestedAddresses;
+};
 
 export type ContractsConfig = {
-  [chainName in Chain]?: NestedAddressesInput;
+  [chain in ChainPrefix]?: NestedAddresses;
 };
 
 export type Permissions = (
