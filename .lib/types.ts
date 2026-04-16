@@ -1,8 +1,8 @@
 import { Permission, PermissionSet } from "zodiac-roles-sdk";
 import { ApplyConstellationPayload } from "@zodiac-os/api-types";
-import type { ChainPrefix } from "./allow/networks";
+import type { ChainPrefix } from "@zodiac-os/sdk/allow";
 
-export type { ChainPrefix } from "./allow/networks";
+export type { ChainPrefix } from "@zodiac-os/sdk/allow";
 
 export type NestedAddresses = {
   [name: string]: `0x${string}` | NestedAddresses;

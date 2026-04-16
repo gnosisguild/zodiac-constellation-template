@@ -11,6 +11,6 @@ export default {
     },
   },
   megaeth: {
-    test: "0x897A33A0AF45b3ba097Bd6045187D622252e6AcD",
+    CompositeExchange: "0x5e3Ae52EbA0F9740364Bd5dd39738e1336086A8b",
   },
 } satisfies ContractsConfig;

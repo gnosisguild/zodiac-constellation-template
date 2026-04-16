@@ -6,8 +6,9 @@
   "packageManager": "bun@1.3.0",
   "scripts": {
     "format": "prettier --write .",
-    "codegen": "dotenvx run -- zodiac-os codegen",
-    "setup": "bun ./.lib/scripts/setup.ts",
+    "pull": "dotenvx run -- bun --bun ./node_modules/.bin/zodiac-os pull",
+    "pull-org": "dotenvx run -- bun --bun ./node_modules/.bin/zodiac-os pull-org",
+    "pull-contracts": "dotenvx run -- bun --bun ./node_modules/.bin/zodiac-os pull-contracts",
     "apply": "bun ./.lib/scripts/apply.ts"
   },
   "dependencies": {
