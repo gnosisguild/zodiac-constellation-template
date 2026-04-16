@@ -1,5 +1,8 @@
-import path from "node:path";
 import { buildAllowKit } from "@zodiac-os/sdk/allow";
+import {
+  resolveAbisDir,
+  type ZodiacConfig,
+} from "@zodiac-os/sdk/cli/config";
 import { constellation as sdkConstellation } from "@zodiac-os/sdk";
 import * as codegen from ".zodiac-os";
 import { c as _c } from "zodiac-roles-sdk";
@@ -7,9 +10,8 @@ import type * as types from "./types";
 import { ref as _ref } from "./ref";
 import config from "../zodiac.config";
 
-const abisDir = path.resolve(process.cwd(), config.abisDir ?? "abis");
 const _allow = buildAllowKit(
-  abisDir,
+  resolveAbisDir(config as ZodiacConfig),
   config.contracts ?? {},
 ) as unknown as AllowKit;
 

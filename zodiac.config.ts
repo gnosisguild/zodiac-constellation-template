@@ -16,6 +16,7 @@ export default defineConfig({
       },
     },
     megaeth: {
+      usdm: "0xfafddbb3fc7688494971a79cc65dca3ef82079e7",
       CompositeExchange: "0x5e3Ae52EbA0F9740364Bd5dd39738e1336086A8b",
     },
   },

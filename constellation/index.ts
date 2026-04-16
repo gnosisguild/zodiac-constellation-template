@@ -1,4 +1,5 @@
 import { backend_operator } from "./roles";
+import { usdm_user_payouts } from "./allowances";
 
 const mega = constellation({
   workspace: "testing",
@@ -15,6 +16,9 @@ const backendSafe = mega.safe["Backend Safe"]({
 
 const backendRoles = mega.roles["Backend Safe"]({
   roles: { backend_operator },
+  allowances: [usdm_user_payouts],
+  // TODO this shall become:
+  // allowances: { usdm_user_payouts },
 });
 
 export { backendSafe, backendRoles };
