@@ -1,51 +1,26 @@
 #!/usr/bin/env bun
 import "dotenv/config";
 import "../globals";
-import assert from "assert";
+import path from "node:path";
 import open from "open";
-import yargs from "yargs";
-import path from "path";
-import { processSpecification } from "../process";
-import { getGitOrigin } from "../source";
-import { apiClient } from "./apiClient";
+import { apply } from "@zodiac-os/sdk";
 
-async function main() {
-  const defaultEntrypoint = "accounts/index.ts";
+const entrypoint = process.argv[2] ?? "constellation/index.ts";
+const resolved = path.resolve(process.cwd(), entrypoint);
+const mod = await import(resolved);
 
-  const args = await yargs(process.argv.slice(2))
-    .usage("$0 <entrypoint>")
-    .positional("entrypoint", {
-      default: defaultEntrypoint,
-      describe: "The Zodiac OS workspace ID to apply the constellation to",
-      type: "string",
-    }).argv;
-
-  const [entrypoint = defaultEntrypoint] = args._ as [string];
-
-  // Resolve the entrypoint path relative to the current working directory
-  const resolvedPath = path.resolve(process.cwd(), entrypoint);
-  const module = await import(resolvedPath);
-
-  // Assert that the module has a default export which is an array
-  assert(
-    module.default,
-    `Module at ${resolvedPath} must have a default export`,
+// Pass every named export (skip `default`) — keys become refs in the payload.
+const { default: defaultExport, ...nodes } = mod;
+if (defaultExport !== undefined) {
+  console.warn(
+    `warning: ${entrypoint} has a default export which will be ignored. ` +
+      `Use named exports — each export becomes a ref in the applied spec.`,
   );
-  assert(
-    Array.isArray(module.default),
-    `Default export from ${resolvedPath} must be an array`,
-  );
+}
 
-  const specification = await processSpecification(module.default);
+const results = await apply(nodes);
 
-  const { url } = await apiClient.applyConstellation({
-    specification,
-    label: "",
-    source: getGitOrigin(),
-  });
-
+for (const { url } of results) {
   console.log(`Apply constellation at: ${url}`);
   open(url);
 }
-
-main();

@@ -17,9 +17,8 @@
   },
   "include": [
     "constellation/**/*",
-    "contracts.ts",
     "zodiac.config.ts",
     ".lib/**/*",
-    ".zodiac-os/**/*.d.ts"
+    ".lib/.zodiac-os/**/*.d.ts"
   ]
 }

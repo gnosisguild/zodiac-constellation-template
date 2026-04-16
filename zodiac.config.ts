@@ -1,15 +1,22 @@
 import { defineConfig } from "@zodiac-os/sdk/cli/config";
-import contracts from "./contracts";
-
-const apiKey = process.env.ZODIAC_API_KEY;
-if (!apiKey?.startsWith("zodiac_")) {
-  throw new Error(
-    "ZODIAC_API_KEY is missing or invalid. Copy .env.template to .env and set it.",
-  );
-}
+import { validateApiKey } from "./.lib/validateApiKey";
 
 export default defineConfig({
-  apiKey: apiKey as `zodiac_${string}`,
-  contracts,
-  abisDir: "abis",
+  apiKey: validateApiKey(process.env.ZODIAC_API_KEY),
+  typesDir: ".lib/.zodiac-os",
+
+  contracts: {
+    arb1: {
+      weth: "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    },
+    eth: {
+      weth: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      uniswap: {
+        positions_nft: "0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
+      },
+    },
+    megaeth: {
+      CompositeExchange: "0x5e3Ae52EbA0F9740364Bd5dd39738e1336086A8b",
+    },
+  },
 });
