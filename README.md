@@ -33,7 +33,9 @@ A ready-to-use starting point for managing Zodiac account constellations as code
 
 ### 1. Define account structure — `constellation/index.ts`
 
-Declare Safes, roles mods, and delay mods using the `constellation()` entrypoint. Existing accounts from your Zodiac OS workspace are available via bracket access (`eth.safe["GG DAO"]`); new accounts are created via direct calls (`eth.safe({...})`). Only nodes you `export` end up in the constellation.
+Declare Safes, roles mods, and delay mods using the `constellation()` entrypoint. Existing accounts from your Zodiac OS workspace are available via bracket access (`eth.safe["GG DAO"]`); new accounts are created by invoking the bracket accessor with a fresh label (`eth.safe["My New Safe"]({ nonce, threshold, owners, … })`). Only nodes you `export` end up in the constellation.
+
+New nodes must provide every mandatory field — `nonce`, `threshold`, `owners` for Safes and `nonce` for Roles mods. The SDK does not fill in runtime defaults, so a missing required field is caught by TypeScript before you apply. Existing-account overrides are all optional.
 
 See `constellation/sketch.ts` for a fuller set of patterns (existing vs new accounts, forward refs, etc.).
 
