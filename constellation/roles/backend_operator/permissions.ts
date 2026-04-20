@@ -1,5 +1,4 @@
 import { usdm_user_payouts } from "../../allowances";
-
 import config from "../../../zodiac.config";
 
 export default [

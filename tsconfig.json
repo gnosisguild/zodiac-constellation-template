@@ -19,6 +19,6 @@
     "constellation/**/*",
     "zodiac.config.ts",
     ".lib/**/*",
-    ".lib/.zodiac-os/**/*.d.ts"
+    ".zodiac/**/*"
   ]
 }

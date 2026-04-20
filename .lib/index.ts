@@ -1,1 +1,3 @@
-export { Specification, Role, ContractsConfig } from "./types";
+export { allow } from "./allow";
+export { constellation } from "./constellation";
+export type { Specification, Role, ContractsConfig } from "./types";

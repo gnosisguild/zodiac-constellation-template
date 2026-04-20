@@ -3,7 +3,6 @@ import { validateApiKey } from "./.lib/validateApiKey";
 
 export default defineConfig({
   apiKey: validateApiKey(process.env.ZODIAC_API_KEY),
-  typesDir: ".lib/.zodiac-os",
 
   contracts: {
     arb1: {
