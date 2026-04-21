@@ -111,5 +111,5 @@ Every time you add, remove, or rename an entry, **re-run `bun pull-contracts`**.
 | `bun pull` | Fetch org data + contract ABIs and regenerate all codegen |
 | `bun pull-org` | Fetch only users/vaults from your workspace |
 | `bun pull-contracts` | Fetch only contract ABIs and regenerate the `allow` kit types |
-| `bun apply` | Deploy the constellation defined in `constellation/index.ts` |
+| `bun apply` | Deploy the constellation defined in `constellation/index.ts`. Runs `bun pull-org` first via the `preapply` hook so existing-account values (addresses, thresholds, owners) are always fresh against your org. |
 | `bun format` | Prettier across the repo |
