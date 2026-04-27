@@ -9,8 +9,8 @@
     "pull": "dotenvx run -- bun --bun ./node_modules/.bin/zodiac-os pull",
     "pull-org": "dotenvx run -- bun --bun ./node_modules/.bin/zodiac-os pull-org",
     "pull-contracts": "dotenvx run -- bun --bun ./node_modules/.bin/zodiac-os pull-contracts",
-    "preapply": "bun run pull-org",
-    "apply": "bun ./.lib/scripts/apply.ts"
+    "prepush": "bun run pull-org",
+    "push": "bun ./.lib/scripts/push.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.51.1",

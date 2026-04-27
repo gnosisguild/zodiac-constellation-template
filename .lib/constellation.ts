@@ -3,7 +3,7 @@ import path from "node:path";
 import { constellation as sdkConstellation } from "@zodiac-os/sdk";
 
 // Lazy codegen load: if `bun pull-org` hasn't been run, fall back to an empty
-// stub so `apply` still works for constellations that don't reference
+// stub so `push` still works for constellations that don't reference
 // existing workspace vaults or users. Referenced entries will throw at use.
 const requireCodegen = createRequire(import.meta.url);
 const emptyCodegen = { users: {}, vaults: {} } as const;

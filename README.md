@@ -9,7 +9,7 @@ A ready-to-use starting point for managing Zodiac account constellations as code
 3. `bun install`
 4. `bun pull` — fetches your org data (users, vaults) and contract ABIs, generates typed codegen
 5. Edit `constellation/index.ts` to define your constellation
-6. `bun apply` to deploy
+6. `bun push` to deploy
 
 ## Project layout
 
@@ -35,7 +35,7 @@ A ready-to-use starting point for managing Zodiac account constellations as code
 
 Declare Safes, roles mods, and delay mods using the `constellation()` entrypoint. Existing accounts from your Zodiac OS workspace are available via bracket access (`eth.safe["GG DAO"]`); new accounts are created by invoking the bracket accessor with a fresh label (`eth.safe["My New Safe"]({ nonce, threshold, owners, … })`). Only nodes you `export` end up in the constellation.
 
-New nodes must provide every mandatory field — `nonce`, `threshold`, `owners` for Safes and `nonce` for Roles mods. The SDK does not fill in runtime defaults, so a missing required field is caught by TypeScript before you apply. Existing-account overrides are all optional.
+New nodes must provide every mandatory field — `nonce`, `threshold`, `owners` for Safes and `nonce` for Roles mods. The SDK does not fill in runtime defaults, so a missing required field is caught by TypeScript before you push. Existing-account overrides are all optional.
 
 See `constellation/sketch.ts` for a fuller set of patterns (existing vs new accounts, forward refs, etc.).
 
@@ -111,5 +111,5 @@ Every time you add, remove, or rename an entry, **re-run `bun pull-contracts`**.
 | `bun pull` | Fetch org data + contract ABIs and regenerate all codegen |
 | `bun pull-org` | Fetch only users/vaults from your workspace |
 | `bun pull-contracts` | Fetch only contract ABIs and regenerate the `allow` kit types |
-| `bun apply` | Deploy the constellation defined in `constellation/index.ts`. Runs `bun pull-org` first via the `preapply` hook so existing-account values (addresses, thresholds, owners) are always fresh against your org. |
+| `bun push` | Push the constellation defined in `constellation/index.ts` to Zodiac OS. Runs `bun pull-org` first via the `prepush` hook so existing-account values (addresses, thresholds, owners) are always fresh against your org. |
 | `bun format` | Prettier across the repo |
