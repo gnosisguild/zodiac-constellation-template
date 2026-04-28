@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "@zodiac-os/constellation-template",
@@ -7,8 +8,8 @@
         "@dotenvx/dotenvx": "^1.51.1",
         "@types/bun": "^1.3.0",
         "@types/yargs": "^17.0.35",
-        "@zodiac-os/api-types": "^1.5.1",
-        "@zodiac-os/sdk": "^1.6.1",
+        "@zodiac-os/api-types": "^1.6.0",
+        "@zodiac-os/sdk": "^1.7.1",
         "defi-kit": "^2.21.6",
         "dotenv": "^17.2.3",
         "ethers": "^6.13.0",
@@ -82,9 +83,9 @@
 
     "@types/yargs-parser": ["@types/yargs-parser@21.0.3", "", {}, "sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ=="],
 
-    "@zodiac-os/api-types": ["@zodiac-os/api-types@1.5.1", "", { "dependencies": { "@epic-web/invariant": "^1.0.0", "zod": "^4.1.11", "zodiac-roles-sdk": "^3.4.4" } }, "sha512-xTLYas0adsBAQ2MR23jw5pAVw5wppzcwGznTpupqKENVURJk4DZXlB7l0sALA1Y5FUyGOz2a7hUC5d4Ze23ntA=="],
+    "@zodiac-os/api-types": ["@zodiac-os/api-types@1.6.0", "", { "dependencies": { "@epic-web/invariant": "^1.0.0", "zod": "^4.1.11", "zodiac-roles-sdk": "^3.4.4" } }, "sha512-EP2ISZpO9iVEnx4RAtYLb8+MN42+Qcd9TBOZH8st4q0rJkRriZikXP1xYUHHH5PVQGYj/t0MgobXTEhsgczfQA=="],
 
-    "@zodiac-os/sdk": ["@zodiac-os/sdk@1.6.1", "", { "dependencies": { "@epic-web/invariant": "1.0.0", "@zodiac-os/api-types": "1.5.1", "commander": "^14.0.3", "ts-morph": "^27.0.2", "zodiac-roles-deployments": "^3.2.0", "zodiac-roles-sdk": "^3.4.7" }, "peerDependencies": { "ethers": "^6.13.0" }, "bin": { "zodiac-os": "dist/cli.mjs" } }, "sha512-AILDYcBWm+VT3DLn0FRFV/ftv4XWDY171n0e886zcB94BL0FQrqM3OMDtYGptwpqhG2jIu3hGaAtWtxGZ+iwHQ=="],
+    "@zodiac-os/sdk": ["@zodiac-os/sdk@1.7.1", "", { "dependencies": { "@epic-web/invariant": "1.0.0", "@zodiac-os/api-types": "1.6.0", "commander": "^14.0.3", "ts-morph": "^27.0.2", "zodiac-roles-deployments": "^3.2.0", "zodiac-roles-sdk": "^3.4.7" }, "peerDependencies": { "ethers": "^6.13.0" }, "bin": { "zodiac": "dist/cli.mjs" } }, "sha512-a7ER1gLTgEFCA9g0SME/4GdBPv+OnmhMT3l7hh14mGtyjvrInNP+8FAYesXA0NxJGmXjll0jGjX/dVjqhba0GA=="],
 
     "aes-js": ["aes-js@4.0.0-beta.5", "", {}, "sha512-G965FqalsNyrPqgEGON7nIx1e/OVENSgiEIzyC63haUMuvNnwIgIjMs52hlTCKhkBny7A2ORNlfY9Zu+jmGk1Q=="],
 
