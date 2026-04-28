@@ -4,20 +4,15 @@ A starter project for managing your organisation's onchain accounts, roles, and 
 
 ## What's a Zodiac constellation?
 
-A **constellation** is a declarative description of an organisation's smart-account graph: which Safes you operate, what roles each one delegates, who's allowed to do what, and how the pieces are wired together.
+A **constellation** is a declarative description of an organisation's smart account graph: which Safes you operate, what roles each one delegates, who's allowed to do what, and how the pieces are wired together.
 
 You write the desired state in TypeScript. Zodiac figures out the diff against what's currently onchain, plans the most efficient set of transactions, and gives you a UI to review and sign them. Anyone with access to the workspace sees the same plan and the same audit trail.
 
 ## Why manage your accounts as code?
 
-Smart-account configurations grow. New roles, new contracts, new chains, new members — and every change needs a careful onchain transaction. Doing this through a UI gets noisy fast: it's hard to review, hard to diff, and hard to undo.
+Treat your smart account graph the way you treat infrastructure: declare it as code, version it in git, ship it like software. AI-assisted edits, branch + PR review, CI dry runs — and a safe path to onchain via Zodiac's review and signing UI.
 
-Treat your account graph the same way you treat your IT infrastructure: **declare it as code, version it in git, ship it like software.**
-
-- **AI-assisted editing.** Your constellation lives in TypeScript files in a normal repo. Use any editor or coding agent to make changes.
-- **Branches and PRs.** Propose changes on a branch. Reviewers see a diff, comment, request changes — same workflow as any code change.
-- **CI and dry runs.** Type-check and lint before anything touches the chain. The diff against live state is computable from a PR.
-- **A safe path to onchain.** Once a change is merged, you push it to Zodiac. Zodiac plans the on-chain updates and walks you and your co-signers through review and signing.
+For the "why" in long form, see Gnosis Guild's [Permissions as Code](https://engineering.gnosisguild.org/posts/permissions-as-code).
 
 ## Getting started
 
@@ -58,11 +53,12 @@ const treasury = eth.safe["GG Treasury"];
 // Tweak an existing Safe
 const tweaked = eth.safe["GG Treasury"]({ threshold: 4 });
 
-// Declare a new Safe
+// Declare a new Safe with a forward reference to the Roles mod below
 const ops = eth.safe["Ops Safe"]({
   nonce: 0n,
   threshold: 2,
   owners: [eth.user["Alice"], "0xb8e48df6818d3cbc648b3e8ec248a4f547135f7a"],
+  modules: [eth.roles["Ops Roles"]],
 });
 
 // Declare a Roles mod that governs that Safe
