@@ -1,13 +1,13 @@
 import { backend_operator } from "./roles";
 import { usdm_user_payouts } from "./allowances";
 
-const gno = constellation({
+const mega = constellation({
   workspace: "Default workspace",
   label: "Backend Operator",
-  chain: 100,
+  chain: 4326,
 });
 
-const backendSafe = gno.safe["Backend Safe"]({
+const backendSafe = mega.safe["Backend Safe"]({
   nonce: 0n,
   threshold: 1,
   owners: [
@@ -16,8 +16,11 @@ const backendSafe = gno.safe["Backend Safe"]({
   ],
 });
 
-const backendRoles = gno.roles["Backend Safe"]({
+const backendRoles = mega.roles["Backend Safe Roles"]({
   nonce: 0n,
+  owner: backendSafe,
+  target: backendSafe,
+  avatar: backendSafe,
   roles: { backend_operator },
   allowances: { usdm_user_payouts },
 });
