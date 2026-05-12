@@ -1,5 +1,4 @@
 #!/usr/bin/env bun
-import "dotenv/config";
 import "../globals";
 import path from "node:path";
 import open from "open";
