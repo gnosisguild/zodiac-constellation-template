@@ -10,6 +10,7 @@ declare global {
   var constellation: typeof _constellation;
   var c: typeof _c;
   type Permissions = types.Permissions;
+  type Members = types.Members;
   type Specification = types.Specification;
   var ref: typeof _ref;
 }
