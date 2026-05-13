@@ -4,6 +4,17 @@ import type { ChainPrefix } from "@zodiac-os/sdk/allow";
 
 export type { ChainPrefix } from "@zodiac-os/sdk/allow";
 
+/** A reference to another node in the constellation, e.g. `eth.safe["Treasury"]`. */
+type NodeRef = Readonly<{
+  type: "SAFE" | "ROLES" | "DELAY";
+  label: string;
+  chain: number;
+}>;
+
+/** Member list for a role: addresses, user accessors (which resolve to
+ * addresses), or node references. */
+export type Members = readonly (`0x${string}` | NodeRef)[];
+
 export type NestedAddresses = {
   [name: string]: `0x${string}` | NestedAddresses;
 };

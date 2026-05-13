@@ -1,9 +1,6 @@
 import { defineConfig } from "@zodiac-os/sdk/cli/config";
-import { validateApiKey } from "./.lib/validateApiKey";
 
 export default defineConfig({
-  apiKey: validateApiKey(process.env.ZODIAC_API_KEY),
-
   contracts: {
     arb1: {
       weth: "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
