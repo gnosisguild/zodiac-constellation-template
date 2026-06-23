@@ -17,7 +17,6 @@ Treat your smart account graph the way you treat infrastructure: declare it as c
 1. `bun install`.
 2. `bun pull` — on first run, opens a browser to authorize this directory and mint a Zodiac API key (written to `.env`). Then fetches your org's users and accounts and generates typed codegen. (If you don't have a Zodiac account yet, the browser walks you through sign-up first.)
    > `.env` is already in `.gitignore` — don't commit your API key.
-   > **Self-hosted / non-production Zodiac?** Point the CLI at your instance by setting `ZODIAC_APP_URL` before the first `bun pull` (e.g. `ZODIAC_APP_URL=https://zodiac.your-org.com bun pull`). It defaults to `https://app.zodiac.eco`. The matching `ZODIAC_API_URL` is written to `.env` automatically.
 3. Add the contracts you want to permission to `zodiac.config.ts`, keyed by chain prefix:
    ```ts
    export default defineConfig({
