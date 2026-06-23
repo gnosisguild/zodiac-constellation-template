@@ -15,8 +15,9 @@ Treat your smart account graph the way you treat infrastructure: declare it as c
 ## Getting started
 
 1. `bun install`.
-2. `bun pull` — on first run, opens a browser to authorize this directory, mints a Zodiac API key (written to `.env`), and scaffolds a starter `zodiac.config.ts`. Then fetches your org's users and accounts and generates typed codegen.
+2. `bun pull` — on first run, opens a browser to authorize this directory and mint a Zodiac API key (written to `.env`). Then fetches your org's users and accounts and generates typed codegen. (If you don't have a Zodiac account yet, the browser walks you through sign-up first.)
    > `.env` is already in `.gitignore` — don't commit your API key.
+   > **Self-hosted / non-production Zodiac?** Point the CLI at your instance by setting `ZODIAC_APP_URL` before the first `bun pull` (e.g. `ZODIAC_APP_URL=https://zodiac.your-org.com bun pull`). It defaults to `https://app.zodiac.eco`. The matching `ZODIAC_API_URL` is written to `.env` automatically.
 3. Add the contracts you want to permission to `zodiac.config.ts`, keyed by chain prefix:
    ```ts
    export default defineConfig({
@@ -92,6 +93,25 @@ export const backendSafe = eth.safe["Backend Safe"]({
 ```
 
 For Safes the required fields are `nonce`, `threshold`, `owners`. For Roles mods, `nonce` (plus `owner`, `target`, `avatar` if you want anything other than the wired-up defaults). The SDK injects no runtime defaults — missing required fields surface as TypeScript errors.
+
+#### Binding to an existing Roles mod by address
+
+Bracket access only knows about accounts in your workspace codegen. To configure a Roles mod that's already deployed on-chain but **not** in your workspace, bind it by `address` instead of declaring a `nonce`. Zodiac diffs your spec against the live mod and updates only what changed:
+
+```ts
+const arb = constellation({
+  workspace: "Default workspace",
+  label: "Backend Operator",
+  chain: 42161, // arbitrum
+});
+
+export const ops = arb.roles["Existing roles mod"]({
+  address: "0x88A51CcB262d04B334065Ad425928dF79c4CB7d7",
+  roles: { backend_operator },
+});
+```
+
+A roles node therefore takes **either** `nonce` (deploy a new mod) **or** `address` (bind an existing one) — never both.
 
 ### Forward references between new nodes
 
