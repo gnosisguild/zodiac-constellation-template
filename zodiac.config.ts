@@ -1,4 +1,4 @@
-import { defineConfig } from "@zodiac-os/sdk/cli/config";
+import { defineConfig } from "@zodiaceco/sdk/cli/config";
 
 export default defineConfig({
   contracts: {

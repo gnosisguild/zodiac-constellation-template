@@ -1,4 +1,4 @@
-import { encodeKey } from "zodiac-roles-sdk";
+import { encodeKey } from "@zodiaceco/sdk";
 
 const USDM_DECIMALS = 18n;
 const DAILY_ALLOWANCE = 10_000n * 10n ** USDM_DECIMALS;

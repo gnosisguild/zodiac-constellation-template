@@ -1,8 +1,8 @@
-import { Permission, PermissionSet } from "zodiac-roles-sdk";
-import { ApplyConstellationPayload } from "@zodiac-os/api-types";
-import type { ChainPrefix } from "@zodiac-os/sdk/allow";
+import { Permission, PermissionSet } from "@zodiaceco/sdk";
+import { ApplyConstellationPayload } from "@zodiaceco/api-types";
+import type { ChainPrefix } from "@zodiaceco/sdk/allow";
 
-export type { ChainPrefix } from "@zodiac-os/sdk/allow";
+export type { ChainPrefix } from "@zodiaceco/sdk/allow";
 
 /** A reference to another node in the constellation, e.g. `eth.safe["Treasury"]`. */
 type NodeRef = Readonly<{

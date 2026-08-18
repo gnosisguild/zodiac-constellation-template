@@ -1,4 +1,4 @@
-import { c as _c } from "zodiac-roles-sdk";
+import { c as _c } from "@zodiaceco/sdk";
 import type * as types from "./types";
 import { ref as _ref } from "./ref";
 import { allow as _allow } from "./allow";
