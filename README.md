@@ -226,15 +226,6 @@ allow.eth.susds["deposit(uint256,address)"](
 );
 ```
 
-The bare `allow.eth.susds.deposit` is `undefined` for such a contract: the kit
-resolves members through ethers' `Interface.getFunction`, which refuses an
-ambiguous name. Only the bracketed form disambiguates.
-
-> **Heads up:** `pull-contracts` currently generates typings for the first
-> overload only, under the bare name, and emits no signature-keyed members. The
-> bracketed call is correct and works at runtime, but TypeScript will not know
-> the member exists yet.
-
 ## Commands
 
 | Command | What it does |
