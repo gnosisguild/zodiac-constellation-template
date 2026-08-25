@@ -212,6 +212,29 @@ Labels are packed into bytes32 directly, so a label has to fit in 31 bytes.
 
 The `allow` kit only knows about contracts listed in `zodiac.config.ts`. Add the address under the right chain prefix (see [Getting started](#getting-started) for an example), then run `bun pull`. If a contract isn't verified on the explorer, the CLI prints the path where you should drop the ABI JSON by hand and re-run.
 
+#### Overloaded functions
+
+The `allow` kit names each member after its ABI function, so a contract that
+overloads a name — say sUSDS, with both `deposit(uint256,address)` and
+`deposit(uint256,address,uint16)` — has no single member that could mean either.
+Address the one you want by its full signature:
+
+```ts
+allow.eth.susds["deposit(uint256,address)"](
+  c.withinAllowance("sky_savings"),
+  c.avatar,
+);
+```
+
+The bare `allow.eth.susds.deposit` is `undefined` for such a contract: the kit
+resolves members through ethers' `Interface.getFunction`, which refuses an
+ambiguous name. Only the bracketed form disambiguates.
+
+> **Heads up:** `pull-contracts` currently generates typings for the first
+> overload only, under the bare name, and emits no signature-keyed members. The
+> bracketed call is correct and works at runtime, but TypeScript will not know
+> the member exists yet.
+
 ## Commands
 
 | Command | What it does |
