@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 import path from "node:path";
-import { constellation as sdkConstellation } from "@zodiac-os/sdk";
+import { constellation as sdkConstellation } from "@zodiaceco/sdk";
 
 // Lazy codegen load: if `bun pull-org` hasn't been run, fall back to an empty
 // stub so `push` still works for constellations that don't reference
@@ -19,7 +19,7 @@ const loadCodegen = () => {
 };
 
 /**
- * Thin wrapper around `@zodiac-os/sdk`'s `constellation()` that pre-binds the
+ * Thin wrapper around `@zodiaceco/sdk`'s `constellation()` that pre-binds the
  * local codegen result, so callers don't have to thread it through.
  */
 export const constellation: typeof sdkConstellation = ((

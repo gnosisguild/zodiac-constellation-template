@@ -9,6 +9,8 @@ User-facing docs are in `README.md` — read it before suggesting edits to `cons
 - `constellation/index.ts` — entrypoint. **Only exported values get pushed.**
 - `constellation/roles/<role>/` — `members.ts` (addresses) + `permissions.ts` (`allow` kit calls).
 - `constellation/allowances/` — reusable Roles allowance objects (key, refill, period, ...).
+  Permissions reference an allowance by its plain label (`c.withinAllowance("usdm_user_payouts")`);
+  only the `key` on the definition itself still needs `encodeKey`.
 - `zodiac.config.ts` — contracts the `allow` kit should know about.
 - `.zodiac/` — generated codegen; **never edit by hand**. Re-run `bun pull` (or `bun pull-org` / `bun pull-contracts`) to refresh.
 - `.lib/` — internal helpers (push script, type plumbing, globals).

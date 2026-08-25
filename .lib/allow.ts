@@ -1,7 +1,7 @@
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildAllowKit } from "@zodiac-os/sdk";
-import { resolveAbisDir } from "@zodiac-os/sdk/cli/config";
+import { buildAllowKit } from "@zodiaceco/sdk";
+import { resolveAbisDir } from "@zodiaceco/sdk/cli/config";
 import config from "../zodiac.config";
 
 const rootDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");

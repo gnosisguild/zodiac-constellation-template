@@ -181,6 +181,33 @@ export default [
 ] satisfies Permissions;
 ```
 
+#### Allowances
+
+An allowance is a refilling budget the Roles modifier tracks on-chain. Define it once under `constellation/allowances/`, hand it to the roles node, and reference it from any permission that should draw on it:
+
+```ts
+// constellation/allowances/index.ts
+import { encodeKey } from "zodiac-roles-sdk";
+
+export const usdm_user_payouts = {
+  key: encodeKey("usdm_user_payouts"),
+  refill: 10_000n * 10n ** 18n, // added each period
+  maxRefill: 10_000n * 10n ** 18n, // cap the balance refills to
+  period: 60n * 60n * 24n, // seconds
+  balance: 10_000n * 10n ** 18n, // starting balance
+  timestamp: 0n,
+};
+```
+
+```ts
+// constellation/roles/<role>/permissions.ts
+allow.megaeth.usdm.transfer(undefined, c.withinAllowance("usdm_user_payouts"));
+```
+
+Allowances are keyed on-chain by a bytes32 value. Anywhere a permission _references_ an allowance you pass the plain label and the SDK encodes it for you — `c.withinAllowance`, `c.calldataMatches`'s `etherWithinAllowance` and `callWithinAllowance`, and the `allow` kit's allowance options all take a `string` as of `zodiac-roles-sdk` 4.1.0. The `key` on the definition above is the one place that still wants `encodeKey`, because the constellation spec schema types it as bytes32.
+
+Labels are packed into bytes32 directly, so a label has to fit in 31 bytes.
+
 #### Adding contracts
 
 The `allow` kit only knows about contracts listed in `zodiac.config.ts`. Add the address under the right chain prefix (see [Getting started](#getting-started) for an example), then run `bun pull`. If a contract isn't verified on the explorer, the CLI prints the path where you should drop the ABI JSON by hand and re-run.

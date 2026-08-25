@@ -2,7 +2,7 @@
 import "../globals";
 import path from "node:path";
 import open from "open";
-import { push } from "@zodiac-os/sdk";
+import { push } from "@zodiaceco/sdk";
 
 const entrypoint = process.argv[2] ?? "constellation/index.ts";
 const resolved = path.resolve(process.cwd(), entrypoint);

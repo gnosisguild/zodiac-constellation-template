@@ -1,11 +1,10 @@
-import { usdm_user_payouts } from "../../allowances";
 import config from "../../../zodiac.config";
 
 export default [
   // user payouts
   allow.megaeth.usdm.transfer(
     undefined, // any address allowed as recipient
-    c.withinAllowance(usdm_user_payouts.key),
+    c.withinAllowance("usdm_user_payouts"),
   ),
 
   // exchange interactions
