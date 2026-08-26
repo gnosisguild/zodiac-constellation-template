@@ -165,21 +165,53 @@ export default [
 ] satisfies Members;
 ```
 
-Permissions are expressed via the `allow` kit (auto-generated from your contracts) or `defi-kit` for common DeFi presets:
+A role's `permissions` is a list of **entries**. Each entry is one thing the role may do, and each carries a `label` that names it as a single card in the Zodiac UI — labels never reach the chain.
 
 ```ts
-import { allow as allowAction } from "defi-kit/eth";
+import { custom, defikit, swap, transfer } from "@zodiaceco/sdk/actions";
 
 export default [
-  allow.eth.weth.deposit({ send: true }),
-  allow.eth.weth.withdraw(),
-  
-  allowAction.aave_v3.deposit({
+  // A labelled bag of `allow`-kit permissions, for anything the
+  // other entries don't cover.
+  custom({
+    label: "Wrap and unwrap ETH",
+    permissions: [
+      allow.eth.weth.deposit({ send: true }),
+      allow.eth.weth.withdraw(),
+    ],
+  }),
+
+  // A DeFi Kit preset, by protocol and verb.
+  defikit.aave_v3.deposit({
+    label: "Supply WETH to Aave v3",
     market: "Core",
     targets: ["WETH"],
   }),
+
+  // Sign CoW orders selling any of `sell` for any of `buy`.
+  swap({
+    label: "Rebalance stables",
+    sell: [USDC, DAI],
+    buy: [USDC, DAI],
+  }),
+
+  // Send tokens to fixed recipients, optionally bridged over Across.
+  transfer({
+    label: "Payouts",
+    tokens: [USDC],
+    to: [eth.safe["Payouts"]],
+    allowance: usdc_payouts,
+  }),
 ] satisfies Permissions;
 ```
+
+A bare `allow`-kit permission is still a valid entry — it just shows up unlabelled:
+
+```ts
+export default [allow.eth.weth.withdraw()] satisfies Permissions;
+```
+
+**Entries describe, they never compile.** A `defikit` entry stores its protocol, verb and parameters; a `swap` stores its token lists. The permissions are built when the constellation is deployed, so a stored revision always compiles through the current compilers instead of replaying a copy made when it was pushed. This is why you no longer call `defi-kit` yourself — a compiled `PermissionSet` is not an entry.
 
 #### Allowances
 
@@ -228,10 +260,10 @@ allow.eth.susds["deposit(uint256,address)"](
 
 ## Commands
 
-| Command | What it does |
-| --- | --- |
-| `bun pull` | Refresh codegen — both org data and contract ABIs. On first run, also authorizes this directory (mints an API key, writes `.env`) and scaffolds `zodiac.config.ts`. |
-| `bun pull-org` | Just the org data (users, accounts) |
-| `bun pull-contracts` | Just the contract ABIs and `allow` kit types — run this after you add a contract to `zodiac.config.ts` |
-| `bun push` | Send the constellation to Zodiac and open the review URL. Runs `pull-org` first so you push against fresh org state. |
-| `bun format` | Prettier across the repo |
+| Command              | What it does                                                                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bun pull`           | Refresh codegen — both org data and contract ABIs. On first run, also authorizes this directory (mints an API key, writes `.env`) and scaffolds `zodiac.config.ts`. |
+| `bun pull-org`       | Just the org data (users, accounts)                                                                                                                                 |
+| `bun pull-contracts` | Just the contract ABIs and `allow` kit types — run this after you add a contract to `zodiac.config.ts`                                                              |
+| `bun push`           | Send the constellation to Zodiac and open the review URL. Runs `pull-org` first so you push against fresh org state.                                                |
+| `bun format`         | Prettier across the repo                                                                                                                                            |

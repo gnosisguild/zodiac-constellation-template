@@ -7,7 +7,9 @@ User-facing docs are in `README.md` — read it before suggesting edits to `cons
 ## Project map
 
 - `constellation/index.ts` — entrypoint. **Only exported values get pushed.**
-- `constellation/roles/<role>/` — `members.ts` (addresses) + `permissions.ts` (`allow` kit calls).
+- `constellation/roles/<role>/` — `members.ts` (addresses) + `permissions.ts`
+  (a list of entries: `custom`, `defikit`, `swap`, `transfer` from
+  `@zodiaceco/sdk/actions`, or a bare `allow` kit permission).
 - `constellation/allowances/` — reusable Roles allowance objects (key, refill, period, ...).
   Permissions reference an allowance by its plain label (`c.withinAllowance("usdm_user_payouts")`);
   only the `key` on the definition itself still needs `encodeKey`.
@@ -16,6 +18,11 @@ User-facing docs are in `README.md` — read it before suggesting edits to `cons
 - `.lib/` — internal helpers (push script, type plumbing, globals).
 
 ## Conventions
+
+- Entries **describe, they never compile**. `defikit` stores protocol, verb and
+  parameters; `swap` stores token lists. Permissions are built at deploy, so
+  never call `defi-kit` yourself — a compiled `PermissionSet` is not an entry,
+  and `Permissions` will reject it.
 
 - `constellation`, `allow`, `c`, `ref` are **globals** (set up in `.lib/globals.ts`). Don't import them.
 - After editing `zodiac.config.ts` (contracts) or anything that changes referenced accounts/users, run `bun pull` so the generated types match.

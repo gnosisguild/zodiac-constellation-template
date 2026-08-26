@@ -1,5 +1,5 @@
-import { Permission, PermissionSet } from "zodiac-roles-sdk";
 import { ApplyConstellationPayload } from "@zodiaceco/api-types";
+import type { PermissionEntry } from "@zodiaceco/sdk/actions";
 import type { ChainPrefix } from "@zodiaceco/sdk/allow";
 
 export type { ChainPrefix } from "@zodiaceco/sdk/allow";
@@ -23,11 +23,14 @@ export type ContractsConfig = {
   [chain in ChainPrefix]?: NestedAddresses;
 };
 
-export type Permissions = (
-  | Permission
-  | PermissionSet
-  | Promise<PermissionSet>
-)[];
+/**
+ * A role's permission list. Re-exported from the SDK rather than restated, so
+ * `permissions.ts` files are checked against the shape `push()` actually takes:
+ * a bare `allow`-kit permission, or one of the labelled entries from
+ * `@zodiaceco/sdk/actions`. A compiled `PermissionSet` — what calling `defi-kit`
+ * directly returns — is no longer one of them.
+ */
+export type Permissions = readonly PermissionEntry[];
 
 export type Ref = (completion: any) => { ref: Lowercase<string> };
 
@@ -35,6 +38,8 @@ export type Role = {
   members: (Ref | `0x${string}`)[];
   permissions: Permissions;
 };
+
+export type { PermissionEntry };
 
 type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
