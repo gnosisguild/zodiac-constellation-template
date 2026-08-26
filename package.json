@@ -15,9 +15,8 @@
     "push": "bun ./.lib/scripts/push.ts"
   },
   "dependencies": {
-    "@zodiaceco/api-types": "^1.7.0",
-    "@zodiaceco/sdk": "^1.13.1",
-    "defi-kit": "^2.21.6",
+    "@zodiaceco/api-types": "^1.8.0",
+    "@zodiaceco/sdk": "^2.0.0",
     "open": "^11.0.0"
   },
   "devDependencies": {

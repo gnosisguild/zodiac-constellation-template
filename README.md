@@ -165,32 +165,101 @@ export default [
 ] satisfies Members;
 ```
 
-Permissions are expressed via the `allow` kit (auto-generated from your contracts) or `defi-kit` for common DeFi presets:
+A role's `permissions` is a list of **entries**. Each entry is one thing the role may do, and each carries a `label` that names it as a single card in the Zodiac UI — labels never reach the chain.
 
 ```ts
-import { allow as allowAction } from "defi-kit/eth";
+import { custom, defikit, swap, transfer } from "@zodiaceco/sdk/actions";
 
 export default [
-  allow.eth.weth.deposit({ send: true }),
-  allow.eth.weth.withdraw(),
-  
-  allowAction.aave_v3.deposit({
+  // A labelled bag of `allow`-kit permissions, for anything the
+  // other entries don't cover.
+  custom({
+    label: "Wrap and unwrap ETH",
+    permissions: [
+      allow.eth.weth.deposit({ send: true }),
+      allow.eth.weth.withdraw(),
+    ],
+  }),
+
+  // A DeFi Kit preset, by protocol and verb.
+  defikit.aave_v3.deposit({
+    label: "Supply WETH to Aave v3",
     market: "Core",
     targets: ["WETH"],
   }),
+
+  // Sign CoW orders selling any of `sell` for any of `buy`.
+  swap({
+    label: "Rebalance stables",
+    sell: [USDC, DAI],
+    buy: [USDC, DAI],
+  }),
+
+  // Send tokens to fixed recipients, optionally bridged over Across.
+  transfer({
+    label: "Payouts",
+    tokens: [USDC],
+    to: [eth.safe["Payouts"]],
+    allowance: usdc_payouts,
+  }),
 ] satisfies Permissions;
 ```
+
+A bare `allow`-kit permission is still a valid entry — it just shows up unlabelled:
+
+```ts
+export default [allow.eth.weth.withdraw()] satisfies Permissions;
+```
+
+**Entries describe, they never compile.** A `defikit` entry stores its protocol, verb and parameters; a `swap` stores its token lists. The permissions are built when the constellation is deployed, so a stored revision always compiles through the current compilers instead of replaying a copy made when it was pushed. A compiled `PermissionSet` — what calling `defi-kit` directly returns — is therefore not an entry; reach for `defikit` instead.
+
+#### Allowances
+
+An allowance is a refilling budget the Roles modifier tracks on-chain. Define it once under `constellation/allowances/`, hand it to the roles node, and reference it from any permission that should draw on it:
+
+```ts
+// constellation/allowances/index.ts
+export const usdm_user_payouts = {
+  key: "usdm_user_payouts",
+  refill: 10_000n * 10n ** 18n, // added each period
+  maxRefill: 10_000n * 10n ** 18n, // cap the balance refills to
+  period: 60n * 60n * 24n, // seconds
+  balance: 10_000n * 10n ** 18n, // starting balance
+  timestamp: 0n,
+};
+```
+
+```ts
+// constellation/roles/<role>/permissions.ts
+allow.megaeth.usdm.transfer(undefined, c.withinAllowance("usdm_user_payouts"));
+```
+
+A `key` is at most 31 bytes.
 
 #### Adding contracts
 
 The `allow` kit only knows about contracts listed in `zodiac.config.ts`. Add the address under the right chain prefix (see [Getting started](#getting-started) for an example), then run `bun pull`. If a contract isn't verified on the explorer, the CLI prints the path where you should drop the ABI JSON by hand and re-run.
 
+#### Overloaded functions
+
+The `allow` kit names each member after its ABI function, so a contract that
+overloads a name — say sUSDS, with both `deposit(uint256,address)` and
+`deposit(uint256,address,uint16)` — has no single member that could mean either.
+Address the one you want by its full signature:
+
+```ts
+allow.eth.susds["deposit(uint256,address)"](
+  c.withinAllowance("sky_savings"),
+  c.avatar,
+);
+```
+
 ## Commands
 
-| Command | What it does |
-| --- | --- |
-| `bun pull` | Refresh codegen — both org data and contract ABIs. On first run, also authorizes this directory (mints an API key, writes `.env`) and scaffolds `zodiac.config.ts`. |
-| `bun pull-org` | Just the org data (users, accounts) |
-| `bun pull-contracts` | Just the contract ABIs and `allow` kit types — run this after you add a contract to `zodiac.config.ts` |
-| `bun push` | Send the constellation to Zodiac and open the review URL. Runs `pull-org` first so you push against fresh org state. |
-| `bun format` | Prettier across the repo |
+| Command              | What it does                                                                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bun pull`           | Refresh codegen — both org data and contract ABIs. On first run, also authorizes this directory (mints an API key, writes `.env`) and scaffolds `zodiac.config.ts`. |
+| `bun pull-org`       | Just the org data (users, accounts)                                                                                                                                 |
+| `bun pull-contracts` | Just the contract ABIs and `allow` kit types — run this after you add a contract to `zodiac.config.ts`                                                              |
+| `bun push`           | Send the constellation to Zodiac and open the review URL. Runs `pull-org` first so you push against fresh org state.                                                |
+| `bun format`         | Prettier across the repo                                                                                                                                            |
