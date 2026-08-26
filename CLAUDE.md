@@ -18,10 +18,10 @@ User-facing docs are in `README.md` — read it before suggesting edits to `cons
 
 ## Conventions
 
-- Entries **describe, they never compile**. `defikit` stores protocol, verb and
-  parameters; `swap` stores token lists. Permissions are built at deploy, so
-  never call `defi-kit` yourself — a compiled `PermissionSet` is not an entry,
-  and `Permissions` will reject it.
+- Entries **describe, they never compile**. `defikit` stores a protocol, verb
+  and parameters; `swap` stores its token lists. The permissions are built when
+  the constellation is deployed, so a stored revision never carries a copy of
+  what a preset meant on the day it was written.
 
 - `constellation`, `allow`, `c`, `ref` are **globals** (set up in `.lib/globals.ts`). Don't import them.
 - After editing `zodiac.config.ts` (contracts) or anything that changes referenced accounts/users, run `bun pull` so the generated types match.
