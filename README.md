@@ -211,7 +211,7 @@ A bare `allow`-kit permission is still a valid entry — it just shows up unlabe
 export default [allow.eth.weth.withdraw()] satisfies Permissions;
 ```
 
-**Entries describe, they never compile.** A `defikit` entry stores its protocol, verb and parameters; a `swap` stores its token lists. The permissions are built when the constellation is deployed, so a stored revision always compiles through the current compilers instead of replaying a copy made when it was pushed. This is why you no longer call `defi-kit` yourself — a compiled `PermissionSet` is not an entry.
+**Entries describe, they never compile.** A `defikit` entry stores its protocol, verb and parameters; a `swap` stores its token lists. The permissions are built when the constellation is deployed, so a stored revision always compiles through the current compilers instead of replaying a copy made when it was pushed. A compiled `PermissionSet` — what calling `defi-kit` directly returns — is therefore not an entry; reach for `defikit` instead.
 
 #### Allowances
 
@@ -234,9 +234,7 @@ export const usdm_user_payouts = {
 allow.megaeth.usdm.transfer(undefined, c.withinAllowance("usdm_user_payouts"));
 ```
 
-Allowances are keyed on-chain by a bytes32 value, but you never write one. Name the allowance and both sides — the definition and every `c.withinAllowance`, `etherWithinAllowance` or `callWithinAllowance` that references it — encode to the same key.
-
-Labels are packed into bytes32 directly, so a label has to fit in 31 bytes.
+A `key` is at most 31 bytes.
 
 #### Adding contracts
 
