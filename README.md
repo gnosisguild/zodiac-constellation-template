@@ -219,10 +219,8 @@ An allowance is a refilling budget the Roles modifier tracks on-chain. Define it
 
 ```ts
 // constellation/allowances/index.ts
-import { encodeKey } from "zodiac-roles-sdk";
-
 export const usdm_user_payouts = {
-  key: encodeKey("usdm_user_payouts"),
+  key: "usdm_user_payouts",
   refill: 10_000n * 10n ** 18n, // added each period
   maxRefill: 10_000n * 10n ** 18n, // cap the balance refills to
   period: 60n * 60n * 24n, // seconds
@@ -236,7 +234,7 @@ export const usdm_user_payouts = {
 allow.megaeth.usdm.transfer(undefined, c.withinAllowance("usdm_user_payouts"));
 ```
 
-Allowances are keyed on-chain by a bytes32 value. Anywhere a permission _references_ an allowance you pass the plain label and the SDK encodes it for you — `c.withinAllowance`, `c.calldataMatches`'s `etherWithinAllowance` and `callWithinAllowance`, and the `allow` kit's allowance options all take a `string` as of `zodiac-roles-sdk` 4.1.0. The `key` on the definition above is the one place that still wants `encodeKey`, because the constellation spec schema types it as bytes32.
+Allowances are keyed on-chain by a bytes32 value, but you never write one. Name the allowance and both sides — the definition and every `c.withinAllowance`, `etherWithinAllowance` or `callWithinAllowance` that references it — encode to the same key.
 
 Labels are packed into bytes32 directly, so a label has to fit in 31 bytes.
 

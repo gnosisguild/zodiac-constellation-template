@@ -11,8 +11,9 @@ User-facing docs are in `README.md` — read it before suggesting edits to `cons
   (a list of entries: `custom`, `defikit`, `swap`, `transfer` from
   `@zodiaceco/sdk/actions`, or a bare `allow` kit permission).
 - `constellation/allowances/` — reusable Roles allowance objects (key, refill, period, ...).
-  Permissions reference an allowance by its plain label (`c.withinAllowance("usdm_user_payouts")`);
-  only the `key` on the definition itself still needs `encodeKey`.
+  Keys are plain labels on both sides — the definition and every
+  `c.withinAllowance("usdm_user_payouts")` that references it. Never call
+  `encodeKey`; it is packed for you.
 - `zodiac.config.ts` — contracts the `allow` kit should know about.
 - `.zodiac/` — generated codegen; **never edit by hand**. Re-run `bun pull` (or `bun pull-org` / `bun pull-contracts`) to refresh.
 - `.lib/` — internal helpers (push script, type plumbing, globals).
